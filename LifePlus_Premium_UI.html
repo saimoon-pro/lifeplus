@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Life+ Healthcare - Healthcare At Your Fingertips</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0088FF;
+            --primary-green: #00C853;
+            --dark-navy: #0A2540;
+            --teal: #00BFA5;
+            --light-blue: #E3F2FD;
+            --off-white: #F8FAFC;
+            --light-gray: #E2E8F0;
+            --medium-gray: #64748B;
+            --dark-gray: #334155;
+            --near-black: #1E293B;
+            --gradient: linear-gradient(135deg, #0088FF 0%, #00C853 100%);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-size: 16px; }
+        body { font-family: 'Inter', sans-serif; background: var(--off-white); color: var(--near-black); line-height: 1.6; overflow-x: hidden; }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--off-white); }
+        ::-webkit-scrollbar-thumb { background: var(--light-gray); border-radius: 4px; }
+        ::selection { background: rgba(0, 136, 255, 0.2); color: var(--dark-navy); }
+        
+        /* Glassmorphism */
+        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .glass-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 8px 32px rgba(0, 136, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8); }
+        
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+        @keyframes pulse-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(0, 136, 255, 0.4); } 50% { box-shadow: 0 0 20px 10px rgba(0, 136, 255, 0.2); } }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        .animate-slide-up { animation: slideInUp 0.6s ease-out forwards; }
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+        
+        /* Typography */
+        h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 700; line-height: 1.2; }
+        .gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 32px; border-radius: 14px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: none; outline: none; text-decoration: none; }
+        .btn-primary { background: var(--gradient); color: white; box-shadow: 0 4px 20px rgba(0, 136, 255, 0.35); }
+        .btn-primary:hover { transform: translateY(-2px) scale(1.02); box-shadow: 0 8px 30px rgba(0, 136, 255, 0.45); }
+        .btn-secondary { background: white; color: var(--primary-blue); border: 2px solid var(--primary-blue); }
+        .btn-secondary:hover { background: var(--light-blue); transform: translateY(-2px); }
+        .btn:active { transform: scale(0.98); }
+        
+        /* Header */
+        .header { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 16px 0; transition: all 0.3s ease; }
+        .header.scrolled { padding: 12px 0; }
+        .header.scrolled .header-inner { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08); }
+        .header-inner { max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; border-radius: 20px; transition: all 0.3s ease; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-icon { width: 44px; height: 44px; background: var(--gradient); border-radius: 14px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(0, 136, 255, 0.3); }
+        .logo-text { font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 700; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-desktop { display: flex; align-items: center; gap: 32px; }
+        .nav-link { color: var(--dark-gray); text-decoration: none; font-weight: 500; font-size: 0.9rem; position: relative; transition: color 0.3s ease; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--gradient); transition: width 0.3s ease; }
+        .nav-link:hover { color: var(--primary-blue); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .icon-btn { width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--off-white); border: none; cursor: pointer; transition: all 0.3s ease; position: relative; }
+        .icon-btn:hover { background: var(--light-blue); transform: translateY(-2px); }
+        .badge { position: absolute; top: -4px; right: -4px; width: 18px; height: 18px; background: var(--gradient); color: white; font-size: 0.65rem; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .mobile-menu-btn { display: none; width: 44px; height: 44px; border-radius: 12px; background: var(--off-white); border: none; cursor: pointer; align-items: center; justify-content: center; }
+        
+        /* Hero */
+        .hero { min-height: 100vh; padding: 140px 24px 80px; position: relative; overflow: hidden; background: linear-gradient(135deg, var(--light-blue) 0%, var(--off-white) 50%, rgba(0, 200, 83, 0.05) 100%); }
+        .hero-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+        .hero-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.5; }
+        .hero-blob-1 { width: 500px; height: 500px; background: rgba(0, 136, 255, 0.15); top: -100px; left: -100px; }
+        .hero-blob-2 { width: 600px; height: 600px; background: rgba(0, 200, 83, 0.12); bottom: -150px; right: -150px; }
+        .hero-blob-3 { width: 400px; height: 400px; background: rgba(0, 191, 165, 0.1); top: 50%; left: 50%; transform: translate(-50%, -50%); }
+        .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border-radius: 50px; font-size: 0.85rem; font-weight: 500; color: var(--dark-navy); margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); border: 1px solid rgba(255, 255, 255, 0.5); }
+        .hero-badge-dot { width: 8px; height: 8px; background: var(--primary-green); border-radius: 50%; animation: pulse-glow 2s infinite; }
+        .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: var(--dark-navy); }
+        .hero-description { font-size: 1.1rem; color: var(--medium-gray); margin-bottom: 32px; max-width: 500px; line-height: 1.7; }
+        .search-bar { background: white; border-radius: 18px; padding: 8px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05); border: 2px solid transparent; transition: all 0.3s ease; margin-bottom: 32px; }
+        .search-bar:focus-within { border-color: var(--primary-blue); box-shadow: 0 4px 20px rgba(0, 136, 255, 0.15), 0 0 0 4px rgba(0, 136, 255, 0.1); transform: scale(1.01); }
+        .search-icon { width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; color: var(--medium-gray); margin-left: 8px; font-size: 1.2rem; }
+        .search-input { flex: 1; border: none; outline: none; font-size: 1rem; color: var(--dark-navy); background: transparent; }
+        .search-input::placeholder { color: var(--medium-gray); }
+        .search-mic { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: var(--off-white); border: none; cursor: pointer; transition: all 0.3s ease; color: var(--medium-gray); font-size: 1.2rem; }
+        .search-mic:hover { background: var(--light-blue); color: var(--primary-blue); }
+        .search-btn { padding: 12px 28px; background: var(--gradient); color: white; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; }
+        .search-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 136, 255, 0.4); }
+        .hero-actions { display: flex; gap: 16px; margin-bottom: 48px; flex-wrap: wrap; }
+        .hero-stats { display: flex; gap: 40px; flex-wrap: wrap; }
+        .stat-item { display: flex; align-items: center; gap: 14px; }
+        .stat-icon { width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .stat-icon.blue { background: rgba(0, 136, 255, 0.1); }
+        .stat-icon.green { background: rgba(0, 200, 83, 0.1); }
+        .stat-icon.purple { background: rgba(147, 51, 234, 0.1); }
+        .stat-value { font-size: 1.6rem; font-weight: 800; color: var(--dark-navy); line-height: 1; }
+        .stat-label { font-size: 0.8rem; color: var(--medium-gray); margin-top: 4px; }
+        .hero-visual { position: relative; display: flex; align-items: center; justify-content: center; }
+        .hero-image-container { position: relative; width: 100%; max-width: 500px; }
+        .hero-image { width: 100%; height: auto; }
+        .floating-card { position: absolute; padding: 16px 20px; border-radius: 18px; display: flex; align-items: center; gap: 12px; animation: float 4s ease-in-out infinite; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1); }
+        .floating-card.card-1 { top: 10%; left: -20px; animation-delay: 0s; }
+        .floating-card.card-2 { bottom: 20%; right: -30px; animation-delay: 2s; }
+        .floating-icon { width: 44px; height: 44px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        .floating-icon.green { background: rgba(0, 200, 83, 0.15); }
+        .floating-icon.blue { background: rgba(0, 136, 255, 0.15); }
+        .floating-text { font-size: 0.85rem; font-weight: 600; color: var(--dark-navy); }
+        .floating-subtext { font-size: 0.7rem; color: var(--medium-gray); margin-top: 2px; }
+        
+        /* Sections */
+        .section { padding: 100px 24px; position: relative; }
+        .section-header { text-align: center; max-width: 600px; margin: 0 auto 60px; }
+        .section-label { display: inline-block; padding: 8px 20px; background: linear-gradient(135deg, rgba(0, 136, 255, 0.1), rgba(0, 200, 83, 0.1)); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--primary-blue); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .section-title { font-size: clamp(2rem, 4vw, 2.8rem); color: var(--dark-navy); margin-bottom: 16px; }
+        .section-description { color: var(--medium-gray); font-size: 1.05rem; line-height: 1.7; }
+        .container { max-width: 1280px; margin: 0 auto; }
+        
+        /* Services */
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .service-card { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(15px); border-radius: 24px; padding: 28px; border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 8px 32px rgba(0, 136, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); transform: scaleX(0); transition: transform 0.4s ease; }
+        .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0, 136, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-icon { width: 64px; height: 64px; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 20px; transition: transform 0.3s ease; }
+        .service-card:hover .service-icon { transform: scale(1.1); }
+        .service-icon.medicine { background: linear-gradient(135deg, #0088FF, #0066CC); }
+        .service-icon.doctor { background: linear-gradient(135deg, #00C853, #00A843); }
+        .service-icon.lab { background: linear-gradient(135deg, #9333EA, #7C3AED); }
+        .service-icon.healthcare { background: linear-gradient(135deg, #EC4899, #DB2777); }
+        .service-icon.ambulance { background: linear-gradient(135deg, #EF4444, #DC2626); }
+        .service-icon.homecare { background: linear-gradient(135deg, #F97316, #EA580C); }
+        .service-icon.packages { background: linear-gradient(135deg, #14B8A6, #0D9488); }
+        .service-icon.lifestyle { background: linear-gradient(135deg, #06B6D4, #0891B2); }
+        .service-title { font-size: 1.15rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 10px; }
+        .service-description { font-size: 0.9rem; color: var(--medium-gray); line-height: 1.6; margin-bottom: 16px; }
+        .service-link { display: inline-flex; align-items: center; gap: 6px; color: var(--primary-blue); font-weight: 600; font-size: 0.85rem; text-decoration: none; opacity: 0; transform: translateX(-10px); transition: all 0.3s ease; }
+        .service-card:hover .service-link { opacity: 1; transform: translateX(0); }
+        
+        /* Products */
+        .products-section { background: var(--off-white); }
+        .products-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 40px; }
+        .view-all-link { display: inline-flex; align-items: center; gap: 8px; color: var(--primary-blue); font-weight: 600; text-decoration: none; transition: gap 0.3s ease; }
+        .view-all-link:hover { gap: 12px; }
+        .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .product-card { background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0, 136, 255, 0.12), 0 8px 20px rgba(0, 0, 0, 0.08); }
+        .product-image { position: relative; background: linear-gradient(135deg, var(--light-blue), var(--off-white)); padding: 40px; display: flex; align-items: center; justify-content: center; }
+        .product-discount { position: absolute; top: 16px; left: 16px; background: linear-gradient(135deg, #FF5252, #DC2626); color: white; padding: 6px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+        .product-emoji { font-size: 4rem; filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1)); }
+        .product-info { padding: 20px; }
+        .product-name { font-size: 1rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 4px; }
+        .product-description { font-size: 0.8rem; color: var(--medium-gray); margin-bottom: 12px; }
+        .product-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .product-price { font-size: 1.2rem; font-weight: 800; color: var(--primary-blue); }
+        .product-original { font-size: 0.85rem; color: var(--medium-gray); text-decoration: line-through; }
+        .add-to-cart { width: 100%; padding: 12px; background: var(--light-blue); color: var(--primary-blue); border: none; border-radius: 12px; font-weight: 600; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s ease; }
+        .add-to-cart:hover { background: var(--gradient); color: white; }
+        .prescription-cta { margin-top: 40px; background: linear-gradient(135deg, rgba(0, 136, 255, 0.1), rgba(0, 200, 83, 0.1)); border-radius: 24px; padding: 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+        .prescription-content { display: flex; align-items: center; gap: 20px; }
+        .prescription-icon { width: 64px; height: 64px; background: var(--gradient); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 8px 25px rgba(0, 136, 255, 0.3); }
+        .prescription-text h3 { font-size: 1.2rem; color: var(--dark-navy); margin-bottom: 4px; }
+        .prescription-text p { color: var(--medium-gray); font-size: 0.9rem; }
+        
+        /* Doctors */
+        .doctors-carousel { display: flex; gap: 24px; overflow-x: auto; padding: 10px 5px 30px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .doctors-carousel::-webkit-scrollbar { display: none; }
+        .doctor-card { flex: 0 0 300px; background: white; border-radius: 24px; overflow: hidden; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); scroll-snap-align: start; cursor: pointer; }
+        .doctor-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(0, 136, 255, 0.12), 0 8px 20px rgba(0, 0, 0, 0.08); }
+        .doctor-image { position: relative; background: linear-gradient(135deg, var(--light-blue), var(--off-white)); padding: 30px; display: flex; align-items: center; justify-content: center; }
+        .doctor-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 3.5rem; box-shadow: 0 15px 40px rgba(0, 136, 255, 0.25); }
+        .doctor-rating { position: absolute; top: 16px; right: 16px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); padding: 6px 12px; border-radius: 10px; display: flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.85rem; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); }
+        .doctor-rating-star { color: #FFB300; }
+        .doctor-experience { position: absolute; bottom: 16px; left: 16px; background: rgba(0, 136, 255, 0.9); color: white; padding: 6px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; }
+        .doctor-info { padding: 20px; }
+        .doctor-name { font-size: 1.05rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 4px; }
+        .doctor-specialty { color: var(--primary-blue); font-weight: 600; font-size: 0.85rem; margin-bottom: 4px; }
+        .doctor-qualification { color: var(--medium-gray); font-size: 0.75rem; margin-bottom: 12px; }
+        .doctor-hospital { display: flex; align-items: center; gap: 6px; color: var(--medium-gray); font-size: 0.8rem; margin-bottom: 16px; }
+        .doctor-actions { display: flex; gap: 10px; }
+        .btn-book { flex: 1; padding: 12px; background: var(--gradient); color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.3s ease; }
+        .btn-book:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 136, 255, 0.35); }
+        .btn-view { padding: 12px 16px; background: var(--off-white); border: 1px solid var(--light-gray); border-radius: 12px; cursor: pointer; transition: all 0.3s ease; }
+        .btn-view:hover { background: var(--light-blue); border-color: var(--primary-blue); }
+        .carousel-nav { display: flex; justify-content: center; gap: 12px; margin-top: 30px; }
+        .carousel-btn { width: 48px; height: 48px; border-radius: 50%; background: white; border: 1px solid var(--light-gray); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); font-size: 1.2rem; }
+        .carousel-btn:hover { background: var(--light-blue); border-color: var(--primary-blue); transform: translateY(-2px); }
+        
+        /* Lab Tests */
+        .lab-tests-section { background: linear-gradient(135deg, rgba(0, 136, 255, 0.05) 0%, rgba(0, 200, 83, 0.05) 100%); }
+        .tests-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        .test-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px); border-radius: 24px; padding: 28px; border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 8px 32px rgba(0, 136, 255, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+        .test-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 50px rgba(0, 136, 255, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.9); }
+        .test-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .test-icon { width: 52px; height: 52px; border-radius: 16px; background: rgba(0, 136, 255, 0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .test-discount { background: linear-gradient(135deg, #FF5252, #DC2626); color: white; padding: 6px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+        .test-name { font-size: 1.1rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 8px; }
+        .test-description { font-size: 0.85rem; color: var(--medium-gray); margin-bottom: 12px; line-height: 1.5; }
+        .test-count { display: inline-block; padding: 6px 12px; background: var(--light-blue); color: var(--primary-blue); border-radius: 8px; font-size: 0.75rem; font-weight: 600; margin-bottom: 16px; }
+        .test-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid var(--light-gray); }
+        .test-price { display: flex; align-items: center; gap: 8px; }
+        .test-price-current { font-size: 1.3rem; font-weight: 800; color: var(--primary-blue); }
+        .test-price-original { font-size: 0.9rem; color: var(--medium-gray); text-decoration: line-through; }
+        .btn-book-small { padding: 10px 20px; background: var(--primary-blue); color: white; border: none; border-radius: 10px; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.3s ease; }
+        .btn-book-small:hover { background: var(--gradient); transform: translateY(-2px); }
+        
+        /* Steps */
+        .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; position: relative; }
+        .steps-grid::before { content: ''; position: absolute; top: 40px; left: 12.5%; right: 12.5%; height: 3px; background: linear-gradient(90deg, var(--primary-blue), var(--primary-green)); opacity: 0.2; }
+        .step-item { text-align: center; position: relative; z-index: 1; }
+        .step-number { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; position: relative; box-shadow: 0 10px 30px rgba(0, 136, 255, 0.3); font-size: 2rem; }
+        .step-badge { position: absolute; top: -5px; right: -5px; width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; color: var(--primary-blue); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); }
+        .step-title { font-size: 1.1rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 8px; }
+        .step-description { font-size: 0.85rem; color: var(--medium-gray); line-height: 1.6; }
+        
+        /* Testimonials */
+        .testimonials-section { background: var(--off-white); }
+        .testimonials-stats { display: flex; justify-content: center; gap: 60px; margin-bottom: 50px; flex-wrap: wrap; }
+        .testimonials-rating { display: flex; align-items: center; gap: 12px; }
+        .stars { display: flex; gap: 4px; }
+        .star { color: #FFB300; font-size: 1.3rem; }
+        .rating-value { font-size: 1.8rem; font-weight: 800; color: var(--dark-navy); }
+        .stat-divider { width: 1px; height: 50px; background: var(--light-gray); }
+        .stat-box { text-align: center; }
+        .stat-number { font-size: 1.8rem; font-weight: 800; color: var(--dark-navy); }
+        .stat-text { font-size: 0.85rem; color: var(--medium-gray); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .testimonial-card { background: white; border-radius: 24px; padding: 28px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03); transition: all 0.4s ease; }
+        .testimonial-card:hover { transform: translateY(-6px); box-shadow: 0 15px 40px rgba(0, 136, 255, 0.1), 0 8px 20px rgba(0, 0, 0, 0.06); }
+        .testimonial-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+        .quote-icon { font-size: 2.5rem; color: rgba(0, 136, 255, 0.15); line-height: 1; }
+        .testimonial-rating { display: flex; gap: 3px; }
+        .testimonial-rating .star { font-size: 0.9rem; }
+        .testimonial-text { font-size: 0.9rem; color: var(--dark-gray); line-height: 1.7; margin-bottom: 20px; }
+        .testimonial-author { display: flex; align-items: center; gap: 12px; }
+        .author-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 1rem; }
+        .author-info h4 { font-size: 0.95rem; color: var(--dark-navy); margin-bottom: 2px; }
+        .author-info p { font-size: 0.8rem; color: var(--medium-gray); }
+        .trust-badges { display: flex; justify-content: center; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
+        .trust-badge { display: flex; align-items: center; gap: 8px; padding: 10px 20px; background: white; border-radius: 50px; font-size: 0.8rem; font-weight: 500; color: var(--dark-navy); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); }
+        .trust-badge-dot { width: 8px; height: 8px; background: var(--primary-green); border-radius: 50%; }
+        
+        /* App Section */
+        .app-section { background: var(--dark-navy); position: relative; overflow: hidden; }
+        .app-section::before { content: ''; position: absolute; top: -50%; right: -20%; width: 80%; height: 150%; background: radial-gradient(ellipse, rgba(0, 136, 255, 0.15) 0%, transparent 70%); }
+        .app-section::after { content: ''; position: absolute; bottom: -30%; left: -10%; width: 50%; height: 80%; background: radial-gradient(ellipse, rgba(0, 200, 83, 0.1) 0%, transparent 60%); }
+        .app-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; position: relative; z-index: 1; }
+        .app-label { display: inline-block; padding: 8px 20px; background: rgba(0, 200, 83, 0.15); border-radius: 50px; font-size: 0.8rem; font-weight: 600; color: var(--primary-green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
+        .app-title { font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 20px; line-height: 1.2; }
+        .app-title span { color: var(--primary-green); }
+        .app-description { color: rgba(255, 255, 255, 0.7); font-size: 1.1rem; margin-bottom: 32px; line-height: 1.7; }
+        .app-features { list-style: none; margin-bottom: 32px; }
+        .app-features li { display: flex; align-items: center; gap: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 12px; font-size: 0.95rem; }
+        .feature-check { width: 24px; height: 24px; border-radius: 6px; background: rgba(0, 200, 83, 0.2); display: flex; align-items: center; justify-content: center; color: var(--primary-green); font-size: 0.8rem; }
+        .app-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+        .app-btn { display: flex; align-items: center; gap: 12px; padding: 14px 24px; background: white; border-radius: 14px; text-decoration: none; color: var(--dark-navy); transition: all 0.3s ease; }
+        .app-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); }
+        .app-btn-icon { font-size: 1.8rem; }
+        .app-btn-text { text-align: left; }
+        .app-btn-text small { display: block; font-size: 0.65rem; color: var(--medium-gray); text-transform: uppercase; }
+        .app-btn-text span { font-weight: 700; font-size: 1rem; }
+        .app-visual { display: flex; justify-content: center; align-items: center; }
+        .phone-mockup { width: 280px; height: 560px; background: linear-gradient(135deg, #1a1a2e, #16213e); border-radius: 40px; padding: 12px; box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.1); animation: float 5s ease-in-out infinite; }
+        .phone-screen { width: 100%; height: 100%; background: linear-gradient(135deg, var(--light-blue), var(--off-white)); border-radius: 32px; overflow: hidden; position: relative; }
+        .phone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 120px; height: 28px; background: #1a1a2e; border-radius: 0 0 20px 20px; }
+        .phone-content { padding: 50px 20px 20px; text-align: center; }
+        .phone-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--gradient); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+        .phone-doctor { font-size: 1rem; font-weight: 700; color: var(--dark-navy); margin-bottom: 4px; }
+        .phone-specialty { font-size: 0.75rem; color: var(--primary-blue); margin-bottom: 16px; }
+        .phone-calendar { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; }
+        .phone-dates { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 12px; }
+        .phone-date { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; border-radius: 8px; font-size: 0.7rem; color: var(--dark-gray); }
+        .phone-date.active { background: var(--gradient); color: white; }
+        .phone-btn { padding: 14px; background: var(--gradient); color: white; border-radius: 12px; font-weight: 600; font-size: 0.85rem; }
+        
+        /* Partners */
+        .partners-section { padding: 60px 24px; overflow: hidden; }
+        .partners-track { display: flex; gap: 30px; animation: scroll 30s linear infinite; }
+        .partner-item { flex-shrink: 0; padding: 16px 32px; background: var(--off-white); border-radius: 16px; font-weight: 600; color: var(--medium-gray); white-space: nowrap; transition: all 0.3s ease; }
+        .partner-item:hover { background: var(--light-blue); color: var(--primary-blue); }
+        
+        /* Footer */
+        .footer { background: var(--dark-navy); padding: 80px 24px 40px; position: relative; }
+        .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px; }
+        .footer-brand .logo { margin-bottom: 20px; }
+        .footer-brand .logo-text { color: white; -webkit-text-fill-color: white; }
+        .footer-description { color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; line-height: 1.7; margin-bottom: 24px; }
+        .social-links { display: flex; gap: 12px; }
+        .social-link { width: 42px; height: 42px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.3s ease; font-size: 1.1rem; }
+        .social-link:hover { background: var(--primary-blue); transform: translateY(-3px); }
+        .footer-title { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 20px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { color: rgba(255, 255, 255, 0.6); text-decoration: none; font-size: 0.9rem; transition: color 0.3s ease; }
+        .footer-links a:hover { color: var(--primary-green); }
+        .footer-contact li { display: flex; align-items: flex-start; gap: 12px; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem; margin-bottom: 16px; }
+        .footer-contact-icon { color: var(--primary-green); font-size: 1.1rem; flex-shrink: 0; }
+        .footer-bottom { max-width: 1280px; margin: 0 auto; padding-top: 30px; border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-apps { display: flex; align-items: center; gap: 16px; }
+        .footer-apps span { color: rgba(255, 255, 255, 0.5); font-size: 0.85rem; }
+        .footer-app-btn { display: flex; align-items: center; gap: 8px; padding: 10px 16px; background: rgba(255, 255, 255, 0.1); border-radius: 10px; color: white; text-decoration: none; font-size: 0.8rem; transition: all 0.3s ease; }
+        .footer-app-btn:hover { background: rgba(255, 255, 255, 0.2); }
+        .footer-copyright { color: rgba(255, 255, 255, 0.4); font-size: 0.85rem; }
+        
+        /* Mobile Nav */
+        .mobile-nav { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); padding: 8px 16px calc(8px + env(safe-area-inset-bottom)); box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.1); z-index: 999; }
+        .mobile-nav-items { display: flex; justify-content: space-around; align-items: center; }
+        .mobile-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 12px; color: var(--medium-gray); text-decoration: none; font-size: 0.65rem; font-weight: 500; transition: all 0.3s ease; position: relative; }
+        .mobile-nav-item.active { color: var(--primary-blue); }
+        .mobile-nav-item.active::after { content: ''; position: absolute; bottom: -4px; width: 4px; height: 4px; background: var(--primary-blue); border-radius: 50%; }
+        .mobile-nav-icon { font-size: 1.4rem; }
+        .mobile-nav-center { width: 56px; height: 56px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; margin-top: -28px; box-shadow: 0 8px 25px rgba(0, 136, 255, 0.4); transition: all 0.3s ease; }
+        .mobile-nav-center:hover { transform: scale(1.1); box-shadow: 0 12px 35px rgba(0, 136, 255, 0.5); }
+        
+        /* AI Chatbot */
+        .ai-chatbot { position: fixed; bottom: 100px; right: 24px; z-index: 1001; }
+        .ai-button { width: 64px; height: 64px; border-radius: 50%; background: var(--gradient); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(0, 136, 255, 0.4), 0 0 0 4px rgba(255, 255, 255, 0.5); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); animation: pulse-glow 3s infinite; font-size: 1.8rem; }
+        .ai-button:hover { transform: scale(1.1); box-shadow: 0 12px 40px rgba(0, 136, 255, 0.5), 0 0 0 6px rgba(255, 255, 255, 0.6); }
+        .ai-chat-window { position: absolute; bottom: 80px; right: 0; width: 360px; max-height: 500px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.5); overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(20px) scale(0.95); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .ai-chat-window.active { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .ai-chat-header { background: var(--gradient); padding: 20px; display: flex; align-items: center; gap: 12px; }
+        .ai-avatar { width: 44px; height: 44px; background: rgba(255, 255, 255, 0.2); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .ai-info h4 { color: white; font-size: 1rem; margin-bottom: 2px; }
+        .ai-info p { color: rgba(255, 255, 255, 0.8); font-size: 0.75rem; }
+        .ai-close { margin-left: auto; width: 32px; height: 32px; border-radius: 8px; background: rgba(255, 255, 255, 0.2); border: none; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s ease; }
+        .ai-close:hover { background: rgba(255, 255, 255, 0.3); }
+        .ai-chat-body { padding: 20px; height: 300px; overflow-y: auto; }
+        .ai-message { display: flex; gap: 10px; margin-bottom: 16px; }
+        .ai-message.user { flex-direction: row-reverse; }
+        .ai-message-avatar { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+        .ai-message-avatar.bot { background: var(--gradient); }
+        .ai-message-avatar.user { background: var(--light-blue); }
+        .ai-message-content { max-width: 70%; padding: 12px 16px; border-radius: 16px; font-size: 0.85rem; line-height: 1.5; }
+        .ai-message.bot .ai-message-content { background: var(--off-white); color: var(--dark-navy); border-bottom-left-radius: 4px; }
+        .ai-message.user .ai-message-content { background: var(--gradient); color: white; border-bottom-right-radius: 4px; }
+        .ai-typing { display: flex; gap: 4px; padding: 12px 16px; }
+        .ai-typing-dot { width: 8px; height: 8px; background: var(--medium-gray); border-radius: 50%; animation: typing 1.4s infinite; }
+        .ai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .ai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing { 0%, 100% { opacity: 0.3; transform: scale(0.8); } 50% { opacity: 1; transform: scale(1); } }
+        .ai-chat-footer { padding: 16px 20px; border-top: 1px solid var(--light-gray); display: flex; gap: 10px; }
+        .ai-input { flex: 1; padding: 12px 16px; border: 1px solid var(--light-gray); border-radius: 12px; font-size: 0.9rem; outline: none; transition: all 0.3s ease; }
+        .ai-input:focus { border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(0, 136, 255, 0.1); }
+        .ai-send { width: 44px; height: 44px; background: var(--gradient); border: none; border-radius: 12px; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; font-size: 1.2rem; }
+        .ai-send:hover { transform: scale(1.05); box-shadow: 0 4px 15px rgba(0, 136, 255, 0.4); }
+        .ai-suggestions { padding: 0 20px 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+        .ai-suggestion { padding: 8px 14px; background: var(--off-white); border: 1px solid var(--light-gray); border-radius: 20px; font-size: 0.75rem; color: var(--dark-gray); cursor: pointer; transition: all 0.3s ease; }
+        .ai-suggestion:hover { background: var(--light-blue); border-color: var(--primary-blue); color: var(--primary-blue); }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .services-grid, .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .tests-grid, .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .steps-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+            .steps-grid::before { display: none; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .app-container { grid-template-columns: 1fr; }
+            .app-visual { display: none; }
+        }
+        @media (max-width: 768px) {
+            .nav-desktop, .nav-actions { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-description { margin-left: auto; margin-right: auto; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { justify-content: center; }
+            .hero-visual { display: none; }
+            .services-grid, .products-grid, .tests-grid, .testimonials-grid { grid-template-columns: 1fr; }
+            .steps-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .social-links { justify-content: center; }
+            .footer-contact li { justify-content: center; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .mobile-nav { display: block; }
+            .ai-chatbot { bottom: 90px; right: 16px; }
+            .ai-chat-window { width: calc(100vw - 32px); right: -8px; }
+            .section { padding: 60px 20px; }
+            .hero { padding: 120px 20px 60px; }
+            .products-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+            .testimonials-stats { gap: 30px; }
+            .stat-divider { display: none; }
+            .prescription-cta { flex-direction: column; text-align: center; }
+            .prescription-content { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: 2rem; }
+            .section-title { font-size: 1.6rem; }
+            .btn { padding: 12px 24px; font-size: 0.9rem; }
+            .hero-actions { flex-direction: column; }
+            .hero-stats { flex-direction: column; gap: 20px; }
+            .stat-item { flex-direction: column; text-align: center; }
+            .search-bar { flex-wrap: wrap; }
+            .search-btn { width: 100%; margin-top: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-inner">
+            <a href="#" class="logo">
+                <div class="logo-icon">L+</div>
+                <span class="logo-text">Life+</span>
+            </a>
+            <nav class="nav-desktop">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#doctors" class="nav-link">Doctors</a>
+                <a href="#medicines" class="nav-link">Medicines</a>
+                <a href="#lab-tests" class="nav-link">Lab Tests</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="icon-btn">🔍</button>
+                <button class="icon-btn">🛒<span class="badge">0</span></button>
+                <button class="btn btn-primary">Login</button>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="hero-blob hero-blob-1"></div>
+            <div class="hero-blob hero-blob-2"></div>
+            <div class="hero-blob hero-blob-3"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge animate-slide-up">
+                    <span class="hero-badge-dot"></span>
+                    <span>500+ Doctors Available Now</span>
+                </div>
+                <h1 class="hero-title animate-slide-up delay-1">Healthcare At Your <span class="gradient-text">Fingertips</span></h1>
+                <p class="hero-description animate-slide-up delay-2">Connect with 500+ certified doctors, order medicines, book lab tests, and access quality healthcare from the comfort of your home.</p>
+                <div class="search-bar animate-slide-up delay-3">
+                    <div class="search-icon">🔍</div>
+                    <input type="text" class="search-input" placeholder="Search for medicines, doctors, or services...">
+                    <button class="search-mic"><img src="https://i.ibb.co.com/2YFDQB5c/stroke.png" width="50px" height="50px"/></button>
+                    <button class="search-btn">Search</button>
+                </div>
+                <div class="hero-actions animate-slide-up delay-4">
+                    <a href="#doctors" class="btn btn-primary">Book Appointment →</a>
+                    <a href="#services" class="btn btn-secondary">▶ Explore Services</a>
+                </div>
+                <div class="hero-stats animate-slide-up delay-5">
+                    <div class="stat-item">
+                        <div class="stat-icon blue">👥</div>
+                        <div><div class="stat-value">50K+</div><div class="stat-label">Patients Served</div></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon green">💊</div>
+                        <div><div class="stat-value">500+</div><div class="stat-label">Certified Doctors</div></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon purple">📹</div>
+                        <div><div class="stat-value">৳99</div><div class="stat-label">Consultation</div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-image-container">
+                    <div class="hero-image animate-float" style="font-size: 18rem; text-align: center;">🏥</div>
+                    <div class="floating-card card-1">
+                        <div class="floating-icon green">📹</div>
+                        <div><div class="floating-text">Video Consult</div><div class="floating-subtext">Available 24/7</div></div>
+                    </div>
+                    <div class="floating-card card-2">
+                        <div class="floating-icon blue">💊</div>
+                        <div><div class="floating-text">Medicine Delivery</div><div class="floating-subtext">Same day delivery</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">What We Offer</span>
+                <h2 class="section-title">Our Services</h2>
+                <p class="section-description">Everything you need for your health and wellness, all in one place.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon medicine">💊</div>
+                    <h3 class="service-title">Medicine</h3>
+                    <p class="service-description">Order medicines with home delivery. Get up to 30% off on prescriptions.</p>
+                    <a href="#" class="service-link">Order Now →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon doctor">🩺</div>
+                    <h3 class="service-title">Doctor Consult</h3>
+                    <p class="service-description">Video & in-person consultations with 500+ certified doctors.</p>
+                    <a href="#" class="service-link">Book Now →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon lab">🧪</div>
+                    <h3 class="service-title">Lab Tests</h3>
+                    <p class="service-description">Home sample collection with reports within 24 hours.</p>
+                    <a href="#" class="service-link">Book Test →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon healthcare">❤️</div>
+                    <h3 class="service-title">Healthcare</h3>
+                    <p class="service-description">Wellness & personal care products at best prices.</p>
+                    <a href="#" class="service-link">Shop Now →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon ambulance">🚑</div>
+                    <h3 class="service-title">Ambulance</h3>
+                    <p class="service-description">Emergency 24/7 ambulance service at your doorstep.</p>
+                    <a href="#" class="service-link">Call Now →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon homecare">🏠</div>
+                    <h3 class="service-title">Home Care</h3>
+                    <p class="service-description">Professional nursing & elderly care services at home.</p>
+                    <a href="#" class="service-link">Learn More →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon packages">📋</div>
+                    <h3 class="service-title">Health Packages</h3>
+                    <p class="service-description">Comprehensive health checkups with up to 60% discount.</p>
+                    <a href="#" class="service-link">View Packages →</a>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon lifestyle">🏋️</div>
+                    <h3 class="service-title">Lifestyle</h3>
+                    <p class="service-description">Fitness, nutrition & wellness programs for healthy living.</p>
+                    <a href="#" class="service-link">Explore →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products -->
+    <section class="section products-section" id="medicines">
+        <div class="container">
+            <div class="products-header">
+                <div>
+                    <span class="section-label">Shop Now</span>
+                    <h2 class="section-title">Popular Medicines</h2>
+                    <p class="section-description">Essential medicines at affordable prices with fast delivery</p>
+                </div>
+                <a href="#" class="view-all-link">View All Medicines →</a>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image"><span class="product-discount">-21%</span><span class="product-emoji">💊</span></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Shelcal 500mg</h3>
+                        <p class="product-description">Calcium supplement</p>
+                        <div class="product-price-row"><span class="product-price">৳129</span><span class="product-original">৳163</span></div>
+                        <button class="add-to-cart">🛒 Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-discount">-21%</span><span class="product-emoji">💊</span></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Evion 400mg</h3>
+                        <p class="product-description">Vitamin E capsules</p>
+                        <div class="product-price-row"><span class="product-price">৳71</span><span class="product-original">৳90</span></div>
+                        <button class="add-to-cart">🛒 Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-discount">-21%</span><span class="product-emoji">💊</span></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Zincovit Tablets</h3>
+                        <p class="product-description">Multivitamin supplement</p>
+                        <div class="product-price-row"><span class="product-price">৳85</span><span class="product-original">৳108</span></div>
+                        <button class="add-to-cart">🛒 Add to Cart</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image"><span class="product-discount">-24%</span><span class="product-emoji">💊</span></div>
+                    <div class="product-info">
+                        <h3 class="product-name">Revital H</h3>
+                        <p class="product-description">Complete multivitamin</p>
+                        <div class="product-price-row"><span class="product-price">৳479</span><span class="product-original">৳630</span></div>
+                        <button class="add-to-cart">🛒 Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="prescription-cta">
+                <div class="prescription-content">
+                    <div class="prescription-icon">📄</div>
+                    <div class="prescription-text">
+                        <h3>Order with Prescription</h3>
+                        <p>Upload prescription and we will deliver your medicines</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary">Upload Prescription</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors -->
+    <section class="section" id="doctors">
+        <div class="container">
+            <div class="products-header">
+                <div>
+                    <span class="section-label">Expert Care</span>
+                    <h2 class="section-title">Consult Top Doctors</h2>
+                    <p class="section-description">Book appointments with experienced specialists</p>
+                </div>
+                <a href="#" class="view-all-link">View All Doctors →</a>
+            </div>
+            <div class="doctors-carousel">
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <div class="doctor-avatar">👨‍⚕️</div>
+                        <div class="doctor-rating"><span class="doctor-rating-star">⭐</span> 4.9</div>
+                        <div class="doctor-experience">25+ years</div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Prof. Dr. M A Jalil Chowdhury</h3>
+                        <p class="doctor-specialty">Medicine Specialist</p>
+                        <p class="doctor-qualification">MBBS, MD, FCPS (Medicine)</p>
+                        <div class="doctor-hospital">📍 Labaid Dhanmondi</div>
+                        <div class="doctor-actions">
+                            <button class="btn-book">📅 Book Now</button>
+                            <button class="btn-view">→</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <div class="doctor-avatar">👨‍⚕️</div>
+                        <div class="doctor-rating"><span class="doctor-rating-star">⭐</span> 4.8</div>
+                        <div class="doctor-experience">20+ years</div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Prof. (Dr.) M G Azam</h3>
+                        <p class="doctor-specialty">Cardiology</p>
+                        <p class="doctor-qualification">MBBS, MD (Cardiology)</p>
+                        <div class="doctor-hospital">📍 Labaid Dhanmondi</div>
+                        <div class="doctor-actions">
+                            <button class="btn-book">📅 Book Now</button>
+                            <button class="btn-view">→</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <div class="doctor-avatar">👨‍⚕️</div>
+                        <div class="doctor-rating"><span class="doctor-rating-star">⭐</span> 4.9</div>
+                        <div class="doctor-experience">15+ years</div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. S. Mokaddas Hossain</h3>
+                        <p class="doctor-specialty">Cardiology</p>
+                        <p class="doctor-qualification">MBBS, FCPS (Med), MD (Card)</p>
+                        <div class="doctor-hospital">📍 Labaid Dhanmondi</div>
+                        <div class="doctor-actions">
+                            <button class="btn-book">📅 Book Now</button>
+                            <button class="btn-view">→</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="doctor-card">
+                    <div class="doctor-image">
+                        <div class="doctor-avatar">👩‍⚕️</div>
+                        <div class="doctor-rating"><span class="doctor-rating-star">⭐</span> 4.7</div>
+                        <div class="doctor-experience">18+ years</div>
+                    </div>
+                    <div class="doctor-info">
+                        <h3 class="doctor-name">Dr. AKS Zahid Mahmud Khan</h3>
+                        <p class="doctor-specialty">Cardiology</p>
+                        <p class="doctor-qualification">MBBS, MD (Cardiology)</p>
+                        <div class="doctor-hospital">📍 Labaid Dhanmondi</div>
+                        <div class="doctor-actions">
+                            <button class="btn-book">📅 Book Now</button>
+                            <button class="btn-view">→</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="carousel-btn">←</button>
+                <button class="carousel-btn">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Tests -->
+    <section class="section lab-tests-section" id="lab-tests">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Home Sample Collection</span>
+                <h2 class="section-title">Health Checkup Packages</h2>
+                <p class="section-description">Comprehensive lab tests at your doorstep. Get accurate reports within 24 hours.</p>
+            </div>
+            <div class="tests-grid">
+                <div class="test-card">
+                    <div class="test-header"><div class="test-icon">🔬</div><span class="test-discount">-60%</span></div>
+                    <h3 class="test-name">Healthy 2026 Full Body Checkup</h3>
+                    <p class="test-description">Complete health screening with 100+ parameters</p>
+                    <span class="test-count">100 Tests</span>
+                    <div class="test-footer">
+                        <div class="test-price"><span class="test-price-current">৳1,449</span><span class="test-price-original">৳3,599</span></div>
+                        <button class="btn-book-small">Book</button>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-header"><div class="test-icon">💉</div><span class="test-discount">-43%</span></div>
+                    <h3 class="test-name">Diabetes Care Package</h3>
+                    <p class="test-description">Comprehensive diabetes monitoring</p>
+                    <span class="test-count">45 Tests</span>
+                    <div class="test-footer">
+                        <div class="test-price"><span class="test-price-current">৳799</span><span class="test-price-original">৳1,399</span></div>
+                        <button class="btn-book-small">Book</button>
+                    </div>
+                </div>
+                <div class="test-card">
+                    <div class="test-header"><div class="test-icon">❤️</div><span class="test-discount">-53%</span></div>
+                    <h3 class="test-name">Basic Health Checkup</h3>
+                    <p class="test-description">Essential health parameters</p>
+                    <span class="test-count">47 Tests</span>
+                    <div class="test-footer">
+                        <div class="test-price"><span class="test-price-current">৳1,049</span><span class="test-price-original">৳2,249</span></div>
+                        <button class="btn-book-small">Book</button>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="#" class="btn btn-secondary">View All Lab Tests →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Simple Process</span>
+                <h2 class="section-title">How Life+ Works</h2>
+                <p class="section-description">Get healthcare services in 4 simple steps. Fast, easy, and reliable.</p>
+            </div>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">🔍<span class="step-badge">1</span></div>
+                    <h3 class="step-title">Search</h3>
+                    <p class="step-description">Find medicines, doctors, or services</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">👆<span class="step-badge">2</span></div>
+                    <h3 class="step-title">Select</h3>
+                    <p class="step-description">Choose from verified options</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">📅<span class="step-badge">3</span></div>
+                    <h3 class="step-title">Book</h3>
+                    <p class="step-description">Schedule appointment or order</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">🏠<span class="step-badge">4</span></div>
+                    <h3 class="step-title">Receive</h3>
+                    <p class="step-description">Get care at your doorstep</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-label">Testimonials</span>
+                <h2 class="section-title">What Our Patients Say</h2>
+                <p class="section-description">Real stories from real patients who have experienced the Life+ difference</p>
+            </div>
+            <div class="testimonials-stats">
+                <div class="testimonials-rating">
+                    <div class="stars"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                    <span class="rating-value">4.9</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-box"><div class="stat-number">50K+</div><div class="stat-text">Happy Patients</div></div>
+                <div class="stat-divider"></div>
+                <div class="stat-box"><div class="stat-number">500+</div><div class="stat-text">Verified Doctors</div></div>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="quote-icon">"</span>
+                        <div class="testimonial-rating"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                    </div>
+                    <p class="testimonial-text">Life+ made healthcare so accessible. Booked a doctor consultation in minutes! The video call quality was excellent.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RA</div>
+                        <div class="author-info"><h4>Rahul Ahmed</h4><p>Dhaka</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="quote-icon">"</span>
+                        <div class="testimonial-rating"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                    </div>
+                    <p class="testimonial-text">Medicines delivered on time, every time. Great service! The discounts are amazing and the app is so easy to use.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">FK</div>
+                        <div class="author-info"><h4>Fatima Khan</h4><p>Chattogram</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="quote-icon">"</span>
+                        <div class="testimonial-rating"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                    </div>
+                    <p class="testimonial-text">The home sample collection for lab tests was so convenient. Got my reports within 24 hours. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MA</div>
+                        <div class="author-info"><h4>Mohammad Ali</h4><p>Sylhet</p></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <span class="quote-icon">"</span>
+                        <div class="testimonial-rating"><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span></div>
+                    </div>
+                    <p class="testimonial-text">Best healthcare app in Bangladesh. The doctor consultation feature saved me so much time. Highly recommended!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">NJ</div>
+                        <div class="author-info"><h4>Nusrat Jahan</h4><p>Dhaka</p></div>
+                    </div>
+                </div>
+            </div>
+            <div class="trust-badges">
+                <div class="trust-badge"><span class="trust-badge-dot"></span>NABL Certified</div>
+                <div class="trust-badge"><span class="trust-badge-dot"></span>ISO 9001:2015</div>
+                <div class="trust-badge"><span class="trust-badge-dot"></span>HIPAA Compliant</div>
+                <div class="trust-badge"><span class="trust-badge-dot"></span>24/7 Support</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Section -->
+    <section class="section app-section">
+        <div class="app-container">
+            <div class="app-content">
+                <span class="app-label">Download App</span>
+                <h2 class="app-title">Get Healthcare <span>Anytime, Anywhere</span></h2>
+                <p class="app-description">Download the Life+ app and access all healthcare services from your smartphone. Available on iOS and Android.</p>
+                <ul class="app-features">
+                    <li><span class="feature-check">✓</span>Easy appointment booking</li>
+                    <li><span class="feature-check">✓</span>Real-time order tracking</li>
+                    <li><span class="feature-check">✓</span>Digital health records</li>
+                    <li><span class="feature-check">✓</span>24/7 customer support</li>
+                    <li><span class="feature-check">✓</span>Medicine reminders</li>
+                    <li><span class="feature-check">✓</span>Exclusive app-only offers</li>
+                </ul>
+                <div class="app-buttons">
+                    <a href="#" class="app-btn">
+                        <span class="app-btn-icon">🍎</span>
+                        <div class="app-btn-text"><small>Download on</small><span>App Store</span></div>
+                    </a>
+                    <a href="#" class="app-btn">
+                        <span class="app-btn-icon">▶</span>
+                        <div class="app-btn-text"><small>Get it on</small><span>Google Play</span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="app-visual">
+                <div class="phone-mockup">
+                    <div class="phone-screen">
+                        <div class="phone-notch"></div>
+                        <div class="phone-content">
+                            <div class="phone-avatar">👨‍⚕️</div>
+                            <div class="phone-doctor">Dr. M A Jalil</div>
+                            <div class="phone-specialty">Medicine Specialist</div>
+                            <div class="phone-calendar">
+                                <div style="font-size: 0.7rem; color: var(--medium-gray); margin-bottom: 8px;">Select Date</div>
+                                <div class="phone-dates">
+                                    <div class="phone-date">S</div><div class="phone-date">M</div><div class="phone-date">T</div><div class="phone-date">W</div><div class="phone-date">T</div><div class="phone-date">F</div><div class="phone-date">S</div>
+                                    <div class="phone-date">1</div><div class="phone-date">2</div><div class="phone-date">3</div><div class="phone-date active">4</div><div class="phone-date">5</div><div class="phone-date">6</div><div class="phone-date">7</div>
+                                </div>
+                            </div>
+                            <div class="phone-btn">Book Appointment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners-section">
+        <div class="section-header" style="margin-bottom: 30px;">
+            <span class="section-label">Trusted By</span>
+            <h2 class="section-title" style="font-size: 1.8rem;">Our Healthcare Partners</h2>
+        </div>
+        <div class="partners-track">
+            <div class="partner-item">Labaid</div>
+            <div class="partner-item">Al-Manar Hospital</div>
+            <div class="partner-item">Al Helal Hospital</div>
+            <div class="partner-item">Rushmono Hospital</div>
+            <div class="partner-item">Dr. Lal PathLabs</div>
+            <div class="partner-item">DNA Lab Limited</div>
+            <div class="partner-item">Prime Diagnostics</div>
+            <div class="partner-item">Central Hospital</div>
+            <div class="partner-item">Green Life Medical</div>
+            <div class="partner-item">Guardian Life</div>
+            <div class="partner-item">Labaid</div>
+            <div class="partner-item">Al-Manar Hospital</div>
+            <div class="partner-item">Al Helal Hospital</div>
+            <div class="partner-item">Rushmono Hospital</div>
+            <div class="partner-item">Dr. Lal PathLabs</div>
+            <div class="partner-item">DNA Lab Limited</div>
+            <div class="partner-item">Prime Diagnostics</div>
+            <div class="partner-item">Central Hospital</div>
+            <div class="partner-item">Green Life Medical</div>
+            <div class="partner-item">Guardian Life</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <a href="#" class="logo">
+                    <div class="logo-icon">L+</div>
+                    <span class="logo-text">Life+</span>
+                </a>
+                <p class="footer-description">Your trusted healthcare partner. Providing quality medical services at your fingertips since 2020.</p>
+                <div class="social-links">
+                    <a href="#" class="social-link">f</a>
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">📷</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">▶</a>
+                </div>
+            </div>
+            <div>
+                <h4 class="footer-title">Information</h4>
+                <ul class="footer-links">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Return & Refund</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Our Features</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Doctor Appointments</a></li>
+                    <li><a href="#">Medicine Delivery</a></li>
+                    <li><a href="#">Lab Tests</a></li>
+                    <li><a href="#">Healthcare Products</a></li>
+                    <li><a href="#">Ambulance Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">Contact Us</h4>
+                <ul class="footer-links footer-contact">
+                    <li><span class="footer-contact-icon">📍</span>House-66, Mirpur Road, Kalabagan 2nd Lane, Dhaka 1205</li>
+                    <li><span class="footer-contact-icon">📞</span>+88 01766661030</li>
+                    <li><span class="footer-contact-icon">✉</span>info@lifeplusbd.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-apps">
+                <span>Download Our App:</span>
+                <a href="#" class="footer-app-btn">🍎 App Store</a>
+                <a href="#" class="footer-app-btn">▶ Google Play</a>
+            </div>
+            <p class="footer-copyright">© 2020 - 2025 LifePlus Bangladesh Limited. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Mobile Bottom Nav -->
+    <nav class="mobile-nav">
+        <div class="mobile-nav-items">
+            <a href="#home" class="mobile-nav-item active">
+                <span class="mobile-nav-icon">🏠</span>
+                <span>Home</span>
+            </a>
+            <a href="#services" class="mobile-nav-item">
+                <span class="mobile-nav-icon">☰</span>
+                <span>Services</span>
+            </a>
+            <a href="#" class="mobile-nav-center">🔍</a>
+            <a href="#doctors" class="mobile-nav-item">
+                <span class="mobile-nav-icon">🩺</span>
+                <span>Doctors</span>
+            </a>
+            <a href="#" class="mobile-nav-item">
+                <span class="mobile-nav-icon">👤</span>
+                <span>Account</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- AI Chatbot -->
+    <div class="ai-chatbot">
+        <button class="ai-button" id="aiToggle" title="Chat with Life+ AI Assistant">🤖</button>
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <div class="ai-avatar">🤖</div>
+                <div class="ai-info">
+                    <h4>Life+ AI Assistant</h4>
+                    <p>Always here to help</p>
+                </div>
+                <button class="ai-close" id="aiClose">✕</button>
+            </div>
+            <div class="ai-chat-body" id="aiChatBody">
+                <div class="ai-message bot">
+                    <div class="ai-message-avatar bot">🤖</div>
+                    <div class="ai-message-content">Hello! I'm your Life+ AI Assistant. How can I help you today? 💙</div>
+                </div>
+            </div>
+            <div class="ai-suggestions">
+                <button class="ai-suggestion" onclick="sendSuggestion('Book a doctor appointment')">Book appointment</button>
+                <button class="ai-suggestion" onclick="sendSuggestion('Order medicines')">Order medicines</button>
+                <button class="ai-suggestion" onclick="sendSuggestion('Lab test packages')">Lab tests</button>
+                <button class="ai-suggestion" onclick="sendSuggestion('Emergency contact')">Emergency</button>
+            </div>
+            <div class="ai-chat-footer">
+                <input type="text" class="ai-input" id="aiInput" placeholder="Type your message...">
+                <button class="ai-send" id="aiSend">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // AI Chatbot
+        const aiToggle = document.getElementById('aiToggle');
+        const aiChatWindow = document.getElementById('aiChatWindow');
+        const aiClose = document.getElementById('aiClose');
+        const aiInput = document.getElementById('aiInput');
+        const aiSend = document.getElementById('aiSend');
+        const aiChatBody = document.getElementById('aiChatBody');
+
+        aiToggle.addEventListener('click', () => {
+            aiChatWindow.classList.toggle('active');
+        });
+
+        aiClose.addEventListener('click', () => {
+            aiChatWindow.classList.remove('active');
+        });
+
+        // AI Responses
+        const aiResponses = {
+            'hello': 'Hello! Welcome to Life+ Healthcare. How can I assist you today? 😊',
+            'hi': 'Hi there! How can I help you with your healthcare needs?',
+            'doctor': 'I can help you book an appointment with our 500+ certified doctors. Would you like to see available specialists?',
+            'appointment': 'To book an appointment, you can browse our doctors section or tell me what specialty you need!',
+            'medicine': 'You can order medicines from our online store with up to 30% discount and same-day delivery!',
+            'order': 'Browse our medicine section to order. We offer prescription uploads for easy ordering!',
+            'lab': 'We offer comprehensive lab test packages with home sample collection. Reports within 24 hours!',
+            'test': 'Our lab test packages include Full Body Checkup, Diabetes Care, Heart Care, and more with up to 60% off!',
+            'emergency': 'For emergencies, please call our 24/7 helpline: +88 01766661030 or use our Ambulance service.',
+            'ambulance': 'Our ambulance service is available 24/7. Call +88 01766661030 for immediate assistance.',
+            'price': 'Our consultation starts from just ৳99! Medicines and lab tests have up to 60% discounts.',
+            'cost': 'Life+ offers affordable healthcare - doctor consultations from ৳99, medicines with discounts, and lab packages from ৳799.',
+            'location': 'Life+ serves all across Bangladesh. We have partnered with top hospitals in Dhaka, Chattogram, and Sylhet.',
+            'contact': 'You can reach us at +88 01766661030 or email info@lifeplusbd.com. Our office is at Kalabagan, Dhaka.',
+            'help': 'I can help you with: booking doctor appointments, ordering medicines, scheduling lab tests, finding healthcare products, and emergency services. What do you need?',
+            'default': 'I understand. For more specific assistance, please call us at +88 01766661030 or browse our services. How else can I help?'
+        };
+
+        function getAIResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            for (const [key, response] of Object.entries(aiResponses)) {
+                if (lowerMsg.includes(key)) {
+                    return response;
+                }
+            }
+            return aiResponses.default;
+        }
+
+        function addMessage(content, isUser = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `ai-message ${isUser ? 'user' : 'bot'}`;
+            messageDiv.innerHTML = `
+                <div class="ai-message-avatar ${isUser ? 'user' : 'bot'}">${isUser ? '👤' : '🤖'}</div>
+                <div class="ai-message-content">${content}</div>
+            `;
+            aiChatBody.appendChild(messageDiv);
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+        }
+
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'ai-message bot typing-indicator';
+            typingDiv.innerHTML = `
+                <div class="ai-message-avatar bot">🤖</div>
+                <div class="ai-typing">
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                    <div class="ai-typing-dot"></div>
+                </div>
+            `;
+            aiChatBody.appendChild(typingDiv);
+            aiChatBody.scrollTop = aiChatBody.scrollHeight;
+            return typingDiv;
+        }
+
+        function sendMessage() {
+            const message = aiInput.value.trim();
+            if (!message) return;
+
+            addMessage(message, true);
+            aiInput.value = '';
+
+            const typing = showTyping();
+
+            setTimeout(() => {
+                typing.remove();
+                const response = getAIResponse(message);
+                addMessage(response);
+            }, 1500);
+        }
+
+        function sendSuggestion(text) {
+            addMessage(text, true);
+            const typing = showTyping();
+            setTimeout(() => {
+                typing.remove();
+                const response = getAIResponse(text);
+                addMessage(response);
+            }, 1200);
+        }
+
+        aiSend.addEventListener('click', sendMessage);
+        aiInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // Carousel scroll
+        document.querySelectorAll('.carousel-btn').forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                const carousel = document.querySelector('.doctors-carousel');
+                const scrollAmount = index === 0 ? -320 : 320;
+                carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Mobile nav active state
+        document.querySelectorAll('.mobile-nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.mobile-nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Button click effects
+        document.querySelectorAll('.btn, .add-to-cart, .btn-book, .btn-book-small').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                if (!this.getAttribute('href') || this.getAttribute('href') === '#') {
+                    const ripple = document.createElement('span');
+                    ripple.style.cssText = `
+                        position: absolute;
+                        background: rgba(255,255,255,0.4);
+                        border-radius: 50%;
+                        transform: scale(0);
+                        animation: ripple 0.6s linear;
+                        pointer-events: none;
+                    `;
+                    this.style.position = 'relative';
+                    this.style.overflow = 'hidden';
+                    this.appendChild(ripple);
+                    setTimeout(() => ripple.remove(), 600);
+                }
+            });
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
